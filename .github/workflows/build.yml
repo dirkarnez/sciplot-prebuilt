@@ -15,9 +15,9 @@ jobs:
       - name: git clone sciplot
         run: git clone --branch v0.2.2 https://github.com/sciplot/sciplot.git
 
-      - name: cmake yaml-cpp
+      - name: cmake sciplot
         shell: cmd
-        run: cd yaml-cpp && cmake.exe -G"MinGW Makefiles" -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX="build/sciplot" -B./build
+        run: cd sciplot && cmake.exe -G"MinGW Makefiles" -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX="build/sciplot" -B./build
       
       - name: mingw build 
         shell: cmd
