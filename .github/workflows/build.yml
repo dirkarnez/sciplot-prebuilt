@@ -1,0 +1,38 @@
+name: sciplot-cpp-prebuilt-release-actions-workflow
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: windows-latest
+    env:
+      mingwTargetZip: sciplot-cpp-${{ github.ref_name }}-mingw.zip
+    steps:
+      - name: git clone sciplot
+        run: git clone --branch v0.2.2 https://github.com/sciplot/sciplot.git
+
+      - name: cmake yaml-cpp
+        shell: cmd
+        run: cd yaml-cpp && cmake.exe -G"MinGW Makefiles" -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX="build/sciplot" -B./build
+      
+      - name: mingw build 
+        shell: cmd
+        run: cd sciplot\build && mingw32-make install
+        
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          type: "zip"
+          directory: "sciplot/build/sciplot"
+          filename: "${{ env.mingwTargetZip }}"
+          
+      - name: Release prebuilt
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "sciplot/build/sciplot/${{ env.mingwTargetZip }}"
+          allowUpdates: true
+          token: ${{ secrets.GITHUB_TOKEN }}
