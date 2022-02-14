@@ -10,7 +10,7 @@ jobs:
     name: Create Release
     runs-on: windows-latest
     env:
-      mingwTargetZip: sciplot-cpp-${{ github.ref_name }}-mingw.zip
+      mingwTargetZip: sciplot-${{ github.ref_name }}-mingw.zip
     steps:
       - name: git clone sciplot
         run: git clone --branch v0.2.2 https://github.com/sciplot/sciplot.git
