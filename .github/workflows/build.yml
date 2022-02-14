@@ -1,4 +1,4 @@
-name: sciplot-cpp-prebuilt-release-actions-workflow
+name: sciplot-prebuilt-release-actions-workflow
 on:
   push:
     # Sequence of patterns matched against refs/tags
